@@ -19,6 +19,8 @@
 #include "DriveWatcherImpl.h"
 #include "EventWindow.h"
 #include "FeatureList.h"
+#include "FileFrequentLocationsModel.h"
+#include "FileHistoryModel.h"
 #include "FrequentLocationsModel.h"
 #include "FrequentLocationsTracker.h"
 #include "HistoryModel.h"
@@ -128,8 +130,12 @@ private:
 	HistoryModel m_historyModel;
 	HistoryTracker m_historyTracker;
 
+	FileHistoryModel m_fileHistoryModel;
+
 	FrequentLocationsModel m_frequentLocationsModel;
 	FrequentLocationsTracker m_frequentLocationsTracker;
+
+	FileFrequentLocationsModel m_fileFrequentLocationsModel;
 
 	DriveWatcherImpl m_driveWatcher;
 	DriveModel m_driveModel;

@@ -17,6 +17,7 @@ namespace
 {
 
 constexpr wchar_t FREQUENT_LOCATIONS_KEY_PATH[] = L"FrequentLocations";
+constexpr wchar_t FILE_FREQUENT_LOCATIONS_KEY_PATH[] = L"FileFrequentLocations";
 
 constexpr wchar_t SETTING_LOCATION[] = L"Location";
 constexpr wchar_t SETTING_NUM_VISITS[] = L"NumVisits";
@@ -55,13 +56,35 @@ std::optional<LocationVisitInfo> LoadFrequentLocation(HKEY frequentLocationsKey)
 			FrequentLocationsStorageHelper::StorageDurationType(timeSinceEpoch)) };
 };
 
-void LoadFromKey(HKEY frequentLocationsKey, FrequentLocationsModel *model)
+void SaveFrequentLocation(HKEY frequentLocationKey, const LocationVisitInfo &frequentLocation)
 {
+	RegistrySettings::SavePidl(frequentLocationKey, SETTING_LOCATION,
+		frequentLocation.GetLocation().Raw());
+	RegistrySettings::SaveDword(frequentLocationKey, SETTING_NUM_VISITS,
+		frequentLocation.GetNumVisits());
+	RegistrySettings::SaveQword(frequentLocationKey, SETTING_LAST_VISIT_TIME,
+		std::chrono::duration_cast<FrequentLocationsStorageHelper::StorageDurationType>(
+			frequentLocation.GetLastVisitTime().time_since_epoch())
+			.count());
+}
+
+void LoadFromApplicationKey(HKEY applicationKey, const wchar_t *frequentLocationsKeyPath,
+	FrequentLocationsModel *model)
+{
+	wil::unique_hkey frequentLocationsKey;
+	HRESULT hr = wil::reg::open_unique_key_nothrow(applicationKey, frequentLocationsKeyPath,
+		frequentLocationsKey, wil::reg::key_access::read);
+
+	if (FAILED(hr))
+	{
+		return;
+	}
+
 	std::vector<LocationVisitInfo> frequentLocations;
 	wil::unique_hkey childKey;
 	int index = 0;
 
-	while (SUCCEEDED(wil::reg::open_unique_key_nothrow(frequentLocationsKey,
+	while (SUCCEEDED(wil::reg::open_unique_key_nothrow(frequentLocationsKey.get(),
 		std::to_wstring(index).c_str(), childKey)))
 	{
 		auto frequentLocation = LoadFrequentLocation(childKey.get());
@@ -77,27 +100,25 @@ void LoadFromKey(HKEY frequentLocationsKey, FrequentLocationsModel *model)
 	model->SetLocationVisits(frequentLocations);
 }
 
-void SaveFrequentLocation(HKEY frequentLocationKey, const LocationVisitInfo &frequentLocation)
+void SaveToApplicationKey(HKEY applicationKey, const wchar_t *frequentLocationsKeyPath,
+	const FrequentLocationsModel *model)
 {
-	RegistrySettings::SavePidl(frequentLocationKey, SETTING_LOCATION,
-		frequentLocation.GetLocation().Raw());
-	RegistrySettings::SaveDword(frequentLocationKey, SETTING_NUM_VISITS,
-		frequentLocation.GetNumVisits());
-	RegistrySettings::SaveQword(frequentLocationKey, SETTING_LAST_VISIT_TIME,
-		std::chrono::duration_cast<FrequentLocationsStorageHelper::StorageDurationType>(
-			frequentLocation.GetLastVisitTime().time_since_epoch())
-			.count());
-}
+	wil::unique_hkey frequentLocationsKey;
+	HRESULT hr = wil::reg::create_unique_key_nothrow(applicationKey, frequentLocationsKeyPath,
+		frequentLocationsKey, wil::reg::key_access::readwrite);
 
-void SaveToKey(HKEY frequentLocationsKey, const FrequentLocationsModel *model)
-{
+	if (FAILED(hr))
+	{
+		return;
+	}
+
 	size_t index = 0;
 
 	for (const auto &frequentLocation :
 		model->GetVisits() | std::views::take(FrequentLocationsStorageHelper::MAX_ITEMS_TO_STORE))
 	{
 		wil::unique_hkey childKey;
-		HRESULT hr = wil::reg::create_unique_key_nothrow(frequentLocationsKey,
+		HRESULT hr = wil::reg::create_unique_key_nothrow(frequentLocationsKey.get(),
 			std::to_wstring(index).c_str(), childKey, wil::reg::key_access::readwrite);
 
 		if (SUCCEEDED(hr))
@@ -116,30 +137,22 @@ namespace FrequentLocationsRegistryStorage
 
 void Load(HKEY applicationKey, FrequentLocationsModel *model)
 {
-	wil::unique_hkey frequentLocationsKey;
-	HRESULT hr = wil::reg::open_unique_key_nothrow(applicationKey, FREQUENT_LOCATIONS_KEY_PATH,
-		frequentLocationsKey, wil::reg::key_access::read);
-
-	if (FAILED(hr))
-	{
-		return;
-	}
-
-	LoadFromKey(frequentLocationsKey.get(), model);
+	LoadFromApplicationKey(applicationKey, FREQUENT_LOCATIONS_KEY_PATH, model);
 }
 
 void Save(HKEY applicationKey, const FrequentLocationsModel *model)
 {
-	wil::unique_hkey frequentLocationsKey;
-	HRESULT hr = wil::reg::create_unique_key_nothrow(applicationKey, FREQUENT_LOCATIONS_KEY_PATH,
-		frequentLocationsKey, wil::reg::key_access::readwrite);
+	SaveToApplicationKey(applicationKey, FREQUENT_LOCATIONS_KEY_PATH, model);
+}
 
-	if (FAILED(hr))
-	{
-		return;
-	}
+void LoadFiles(HKEY applicationKey, FrequentLocationsModel *model)
+{
+	LoadFromApplicationKey(applicationKey, FILE_FREQUENT_LOCATIONS_KEY_PATH, model);
+}
 
-	SaveToKey(frequentLocationsKey.get(), model);
+void SaveFiles(HKEY applicationKey, const FrequentLocationsModel *model)
+{
+	SaveToApplicationKey(applicationKey, FILE_FREQUENT_LOCATIONS_KEY_PATH, model);
 }
 
 }

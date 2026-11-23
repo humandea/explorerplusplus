@@ -168,17 +168,20 @@ void BrowserWindowFake::OpenItem(PCIDLIST_ABSOLUTE pidlItem,
 	}
 }
 
-void BrowserWindowFake::OpenFileItem(const std::wstring &itemPath, const std::wstring &parameters)
+bool BrowserWindowFake::OpenFileItem(const std::wstring &itemPath, const std::wstring &parameters)
 {
 	auto pidl = CreateSimplePidlForTest(itemPath);
-	OpenFileItem(pidl.Raw(), parameters);
+	return OpenFileItem(pidl.Raw(), parameters);
 }
 
-void BrowserWindowFake::OpenFileItem(PCIDLIST_ABSOLUTE pidlItem, const std::wstring &parameters)
+bool BrowserWindowFake::OpenFileItem(PCIDLIST_ABSOLUTE pidlItem, const std::wstring &parameters)
 {
 	// No action is taken to open files here.
 	UNREFERENCED_PARAMETER(pidlItem);
 	UNREFERENCED_PARAMETER(parameters);
+
+	// Pretend the item was successfully opened.
+	return true;
 }
 
 ShellBrowser *BrowserWindowFake::GetActiveShellBrowser()

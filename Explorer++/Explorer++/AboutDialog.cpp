@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "AboutDialog.h"
 #include "MainResource.h"
+#include "RecentItems/FeatureVersion.h"
 #include "ResourceLoader.h"
 #include "ThirdPartyCreditsDialog.h"
 #include "Version.h"
@@ -76,6 +77,11 @@ INT_PTR AboutDialog::OnInitDialog()
 	{
 		versionAndReleaseMode += L" " + releaseMode;
 	}
+
+	// FORK-FEATURE-VERSION: Appends the fork-only feature version (see
+	// RecentItems\FeatureVersion.h) to the version line shown in the About dialog. This block and
+	// that header should be removed before the feature is pushed to the upstream master branch.
+	versionAndReleaseMode += std::wstring(L" ") + FeatureVersion::DISPLAY_STRING;
 
 	std::wstring version = fmt::format(fmt::runtime(versionTemplate),
 		fmt::arg(L"version_string", versionAndReleaseMode), fmt::arg(L"platform", platform));

@@ -85,6 +85,7 @@ struct Config
 
 	// Toolbar display settings
 	ValueWrapper<bool> showFolders = true;
+	ValueWrapper<bool> showRecentItemsPane = false;
 	ValueWrapper<bool> showAddressBar = true;
 	ValueWrapper<bool> showMainToolbar = true;
 	ValueWrapper<bool> showBookmarksToolbar = false;

@@ -29,6 +29,22 @@ public:
 
 	virtual std::wstring GetText() const = 0;
 
+	// Returns text that will be drawn after the main text, in a smaller font. Returning an empty
+	// string (rather than nullopt) indicates that only the main text should be drawn, but that it
+	// should be drawn in the smaller font. Returning nullopt indicates that the node should be
+	// drawn using the standard rendering (i.e. the main text only, in the standard font).
+	virtual std::optional<std::wstring> MaybeGetSecondaryText() const
+	{
+		return std::nullopt;
+	}
+
+	// Returns the text to show in the tooltip displayed for this node. Returning nullopt indicates
+	// that no tooltip should be shown for the node.
+	virtual std::optional<std::wstring> MaybeGetTooltipText() const
+	{
+		return std::nullopt;
+	}
+
 	// The text used when editing can differ from the node's display text. For example, a drive has
 	// a display name that's built from the drive letter and label. When editing, only the label
 	// appears, however.

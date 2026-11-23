@@ -279,38 +279,14 @@ void ToolbarViewBase::AddButton(int id, const ToolbarButton *button, size_t inde
 	auto res = SendMessage(GetHWND(), TB_INSERTBUTTON, index, reinterpret_cast<LPARAM>(&tbButton));
 	CHECK(res);
 
-	NotifySizeRequirementsChanged();
-}
-
-TBBUTTON ToolbarViewBase::BuildNativeButtonStruct(int id, const ToolbarButton *button) const
-{
-	BYTE style = BTNS_AUTOSIZE | BTNS_NOPREFIX;
-
-	if (button->ShouldShowText())
-	{
-		WI_SetFlag(style, BTNS_SHOWTEXT);
-	}
-
-	if (button->IsDropDownButton())
-	{
-		WI_SetFlag(style, BTNS_DROPDOWN);
-	}
-
-	TBBUTTON tbButton = {};
-	tbButton.idCommand = id;
-	tbButton.iBitmap = button->GetImageIndex() ? *button->GetImageIndex() : I_IMAGENONE;
-	tbButton.fsState = GetToolbarButtonState(button);
-	tbButton.fsStyle = style;
-	return tbButton;
-}
-
-void ToolbarViewBase::AddSeparator(size_t index)
-{
-	CHECK(index <= GetNumButtons());
-
-	TBBUTTON tbButton = {};
-	tbButton.fsStyle = BTNS_SEP;
-	auto res = SendMessage(GetHWND(), TB_INSERTBUTTON, index, reinterpret_cast<LPARAM>(&tbButton));
+	// Buttons that show text are measured by the control with extra padding when inserted (the
+	// width only tightens once the button is updated). Re-sending the text here ensures the
+	// button is sized consistently from the start.
+	TBBUTTONINFO tbButtonInfo = {};
+	tbButtonInfo.cbSize = sizeof(tbButtonInfo);
+	tbButtonInfo.dwMask = TBIF_TEXT;
+	tbButtonInfo.pszText = text.data();
+	res = SendMessage(GetHWND(), TB_SETBUTTONINFO, id, reinterpret_cast<LPARAM>(&tbButtonInfo));
 	CHECK(res);
 
 	NotifySizeRequirementsChanged();
@@ -339,6 +315,40 @@ void ToolbarViewBase::UpdateButton(const ToolbarButton *button)
 	CHECK(res);
 
 	NotifySizeRequirementsChanged();
+}
+
+void ToolbarViewBase::AddSeparator(size_t index)
+{
+	CHECK(index <= GetNumButtons());
+
+	TBBUTTON tbButton = {};
+	tbButton.fsStyle = BTNS_SEP;
+	auto res = SendMessage(GetHWND(), TB_INSERTBUTTON, index, reinterpret_cast<LPARAM>(&tbButton));
+	CHECK(res);
+
+	NotifySizeRequirementsChanged();
+}
+
+TBBUTTON ToolbarViewBase::BuildNativeButtonStruct(int id, const ToolbarButton *button) const
+{
+	BYTE style = BTNS_AUTOSIZE | BTNS_NOPREFIX;
+
+	if (button->ShouldShowText())
+	{
+		WI_SetFlag(style, BTNS_SHOWTEXT);
+	}
+
+	if (button->IsDropDownButton())
+	{
+		WI_SetFlag(style, BTNS_DROPDOWN);
+	}
+
+	TBBUTTON tbButton = {};
+	tbButton.idCommand = id;
+	tbButton.iBitmap = button->GetImageIndex() ? *button->GetImageIndex() : I_IMAGENONE;
+	tbButton.fsState = GetToolbarButtonState(button);
+	tbButton.fsStyle = style;
+	return tbButton;
 }
 
 std::optional<size_t> ToolbarViewBase::MaybeGetButtonIndex(const ToolbarButton *button) const

@@ -26,6 +26,7 @@ const ToolbarButtonMapping::value_type g_xmlButtonMappingValues[] = {
 	{ MainToolbarButtonId::Forward, L"Forward" },
 	{ MainToolbarButtonId::Up, L"Up" },
 	{ MainToolbarButtonId::Folders, L"Folders" },
+	{ MainToolbarButtonId::Recent, L"Recent items" },
 	{ MainToolbarButtonId::CopyTo, L"Copy To" },
 	{ MainToolbarButtonId::MoveTo, L"Move To" },
 	{ MainToolbarButtonId::NewFolder, L"New Folder" },

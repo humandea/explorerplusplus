@@ -218,6 +218,7 @@ const wchar_t SETTING_HEIGHT[] = L"Height";
 const wchar_t SETTING_SHOW_STATE[] = L"ShowState";
 const wchar_t SETTING_SELECTED_TAB[] = L"SelectedTab";
 const wchar_t SETTING_TREEVIEW_WIDTH[] = L"TreeViewWidth";
+const wchar_t SETTING_RECENT_ITEMS_PANE_WIDTH[] = L"RecentItemsPaneWidth";
 const wchar_t SETTING_DISPLAY_WINDOW_WIDTH[] = L"DisplayWindowWidth";
 const wchar_t SETTING_DISPLAY_WINDOW_HEIGHT[] = L"DisplayWindowHeight";
 
@@ -310,6 +311,10 @@ std::optional<WindowStorageData> LoadWindow(IXMLDOMNode *rootNode, IXMLDOMNode *
 		GetIntSetting(settingsNode.get(), V1::SETTING_TREEVIEW_WIDTH, treeViewWidth);
 	}
 
+	int recentItemsPaneWidth = LayoutDefaults::DEFAULT_RECENT_ITEMS_PANE_WIDTH;
+	hr = XMLSettings::GetIntFromMap(attributeMap.get(), SETTING_RECENT_ITEMS_PANE_WIDTH,
+		recentItemsPaneWidth);
+
 	int displayWindowWidth = LayoutDefaults::DEFAULT_DISPLAY_WINDOW_WIDTH;
 	hr = XMLSettings::GetIntFromMap(attributeMap.get(), SETTING_DISPLAY_WINDOW_WIDTH,
 		displayWindowWidth);
@@ -365,6 +370,7 @@ std::optional<WindowStorageData> LoadWindow(IXMLDOMNode *rootNode, IXMLDOMNode *
 		.mainRebarInfo = mainRebarInfo,
 		.mainToolbarLayout = mainToolbarLayout,
 		.treeViewWidth = treeViewWidth,
+		.recentItemsPaneWidth = recentItemsPaneWidth,
 		.displayWindowWidth = displayWindowWidth,
 		.displayWindowHeight = displayWindowHeight };
 }
@@ -427,6 +433,8 @@ void SaveWindow(IXMLDOMDocument *xmlDocument, IXMLDOMNode *windowsNode,
 		XMLSettings::EncodeIntValue(window.selectedTab));
 	XMLSettings::AddAttributeToNode(xmlDocument, windowNode.get(), SETTING_TREEVIEW_WIDTH,
 		XMLSettings::EncodeIntValue(window.treeViewWidth));
+	XMLSettings::AddAttributeToNode(xmlDocument, windowNode.get(), SETTING_RECENT_ITEMS_PANE_WIDTH,
+		XMLSettings::EncodeIntValue(window.recentItemsPaneWidth));
 	XMLSettings::AddAttributeToNode(xmlDocument, windowNode.get(), SETTING_DISPLAY_WINDOW_WIDTH,
 		XMLSettings::EncodeIntValue(window.displayWindowWidth));
 	XMLSettings::AddAttributeToNode(xmlDocument, windowNode.get(), SETTING_DISPLAY_WINDOW_HEIGHT,

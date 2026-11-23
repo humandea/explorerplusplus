@@ -53,6 +53,39 @@
     <ClCompile Include="XmlStorageTestHelper.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
+    <ClCompile Include="RecentTreeBuilderTest.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="FileFrequentLocationsDataSourceTest.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="FileFrequentLocationsRegistryStorageTest.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="FileFrequentLocationsXmlStorageTest.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="FileHistoryDataSourceTest.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystemPathStatusCheckerTest.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="FolderFrequentLocationsDataSourceTest.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="FolderHistoryDataSourceTest.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="CompositeRecentItemsDataSourceTest.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItemsTreeDelegateTest.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentTreeViewAdapterTest.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
     <ClCompile Include="RegistryStorageTestHelper.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
@@ -744,6 +777,9 @@
     </Filter>
     <Filter Include="Frequent Locations">
       <UniqueIdentifier>{608f3f32-fe72-473c-af0b-a9acec71dfcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Recent Items">
+      <UniqueIdentifier>{632dc6e1-065d-4fa1-a166-e828122925aa}</UniqueIdentifier>
     </Filter>
     <Filter Include="Data Exchange">
       <UniqueIdentifier>{076a2725-31ce-44cf-a4be-99f710f72705}</UniqueIdentifier>

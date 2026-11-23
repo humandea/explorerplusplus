@@ -450,6 +450,17 @@
     </ClCompile>
     <ClCompile Include="PidlTest.cpp" />
     <ClCompile Include="RegistrySettingsTest.cpp" />
+    <ClCompile Include="RecentTreeBuilderTest.cpp" />
+    <ClCompile Include="RecentItemsTreeDelegateTest.cpp" />
+    <ClCompile Include="RecentTreeViewAdapterTest.cpp" />
+    <ClCompile Include="FileFrequentLocationsDataSourceTest.cpp" />
+    <ClCompile Include="FileFrequentLocationsRegistryStorageTest.cpp" />
+    <ClCompile Include="FileFrequentLocationsXmlStorageTest.cpp" />
+    <ClCompile Include="FileHistoryDataSourceTest.cpp" />
+    <ClCompile Include="FileSystemPathStatusCheckerTest.cpp" />
+    <ClCompile Include="FolderFrequentLocationsDataSourceTest.cpp" />
+    <ClCompile Include="FolderHistoryDataSourceTest.cpp" />
+    <ClCompile Include="CompositeRecentItemsDataSourceTest.cpp" />
     <ClCompile Include="RegistryStorageTestHelper.cpp" />
     <ClCompile Include="ResourceTestHelper.cpp" />
     <ClCompile Include="ShellBrowserFake.cpp" />

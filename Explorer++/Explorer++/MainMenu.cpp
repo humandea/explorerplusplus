@@ -159,6 +159,7 @@ void MainMenu::BuildViewMenu(BrowserWindow *browser, AppServices *appServices)
 
 	AppendItem(menuView, IDM_VIEW_STATUSBAR, IDS_VIEW_STATUSBAR);
 	AppendItem(menuView, IDM_VIEW_FOLDERS, IDS_VIEW_FOLDERS);
+	AppendItem(menuView, IDM_VIEW_RECENT_ITEMS, IDS_VIEW_RECENT_ITEMS);
 	AppendItem(menuView, IDM_VIEW_DISPLAYWINDOW, IDS_VIEW_DISPLAYWINDOW);
 
 	auto *toolbarsMenuView = AppendSubMenu(menuView, IDS_VIEW_TOOLBARS_POPUP);
@@ -608,6 +609,9 @@ std::optional<UINT> MainMenu::MaybeGetHelpTextIdForCommand(WORD id)
 	case IDM_VIEW_FOLDERS:
 		return IDS_VIEW_FOLDERS_HELP_TEXT;
 
+	case IDM_VIEW_RECENT_ITEMS:
+		return IDS_VIEW_RECENT_ITEMS_HELP_TEXT;
+
 	case IDM_VIEW_DISPLAYWINDOW:
 		return IDS_VIEW_DISPLAYWINDOW_HELP_TEXT;
 
@@ -786,6 +790,12 @@ MenuItemCheckedCallback MainMenu::MaybeGetCheckedCallback(WORD id) const
 		return [this]
 		{
 			return m_config->showFolders.get();
+		};
+
+	case IDM_VIEW_RECENT_ITEMS:
+		return [this]
+		{
+			return m_config->showRecentItemsPane.get();
 		};
 
 	case IDM_VIEW_DISPLAYWINDOW:

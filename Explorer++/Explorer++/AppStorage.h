@@ -33,6 +33,7 @@ public:
 	virtual void LoadDialogStates() = 0;
 	virtual void LoadDefaultColumns(FolderColumns &defaultColumns) = 0;
 	virtual void LoadFrequentLocations(FrequentLocationsModel *frequentLocationsModel) = 0;
+	virtual void LoadFileFrequentLocations(FrequentLocationsModel *fileFrequentLocationsModel) = 0;
 
 	virtual void SaveConfig(const Config &config) = 0;
 	virtual void SaveWindows(const std::vector<WindowStorageData> &windows) = 0;
@@ -42,5 +43,7 @@ public:
 	virtual void SaveDialogStates() = 0;
 	virtual void SaveDefaultColumns(const FolderColumns &defaultColumns) = 0;
 	virtual void SaveFrequentLocations(const FrequentLocationsModel *frequentLocationsModel) = 0;
+	virtual void SaveFileFrequentLocations(
+		const FrequentLocationsModel *fileFrequentLocationsModel) = 0;
 	virtual void Commit() = 0;
 };

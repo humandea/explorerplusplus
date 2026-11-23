@@ -24,6 +24,8 @@
 #include "MainToolbar.h"
 #include "MainToolbarView.h"
 #include "RebarBandStorageData.h"
+#include "RecentItems/RecentItemsPane.h"
+#include "RecentItems/RecentItemsPaneView.h"
 #include "ResourceLoader.h"
 #include "Runtime.h"
 #include "ShellBrowser/ShellBrowserImpl.h"
@@ -74,6 +76,7 @@ Explorerplusplus::Explorerplusplus(const WindowStorageData &storageData, AppServ
 	m_iDWFolderSizeUniqueId = 0;
 
 	m_treeViewWidth = storageData.treeViewWidth;
+	m_recentItemsPaneWidth = storageData.recentItemsPaneWidth;
 	m_displayWindowWidth = storageData.displayWindowWidth;
 	m_displayWindowHeight = storageData.displayWindowHeight;
 
@@ -105,6 +108,8 @@ void Explorerplusplus::SetUpLayoutConfigListeners()
 		m_config->showStatusBar.addObserver(std::bind(&Explorerplusplus::UpdateLayout, this)));
 	m_connections.push_back(
 		m_config->showFolders.addObserver(std::bind(&Explorerplusplus::UpdateLayout, this)));
+	m_connections.push_back(m_config->showRecentItemsPane.addObserver(
+		std::bind(&Explorerplusplus::UpdateLayout, this)));
 	m_connections.push_back(
 		m_config->showDisplayWindow.addObserver(std::bind(&Explorerplusplus::UpdateLayout, this)));
 	m_connections.push_back(m_config->displayWindowVertical.addObserver(
@@ -123,6 +128,10 @@ void Explorerplusplus::Initialize(const WindowStorageData &storageData)
 	InitializeTabObservers();
 	InitializeTabs();
 	CreateFolderControls();
+
+#ifdef _DEBUG
+	CreateRecentItemsControls();
+#endif
 
 	/* All child windows MUST be resized before
 	any listview changes take place. If auto arrange
@@ -283,6 +292,26 @@ void Explorerplusplus::OnFoldersPaneResized(int newWidth)
 	UpdateLayout();
 }
 
+void Explorerplusplus::CreateRecentItemsControls()
+{
+	auto *recentItemsPaneView = m_view.GetRecentItemsPaneView();
+
+	if (!recentItemsPaneView)
+	{
+		return;
+	}
+
+	m_recentItemsPane = std::make_unique<RecentItemsPane>(recentItemsPaneView, this, m_appServices,
+		&m_iconFetcher, std::bind_front(&Explorerplusplus::OnRecentItemsPaneResized, this));
+}
+
+void Explorerplusplus::OnRecentItemsPaneResized(int newWidth)
+{
+	m_recentItemsPaneWidth = newWidth;
+
+	UpdateLayout();
+}
+
 Tab *Explorerplusplus::CreateTabFromPreservedTab(const PreservedTab *tab)
 {
 	return &GetActivePane()->GetTabBar()->CreateNewTab(*tab);
@@ -309,6 +338,7 @@ WindowStorageData Explorerplusplus::GetStorageData() const
 		.mainRebarInfo = m_view.GetMainRebarView()->GetStorageData(),
 		.mainToolbarLayout = m_mainToolbar->GetLayoutForStorage(),
 		.treeViewWidth = m_treeViewWidth,
+		.recentItemsPaneWidth = m_recentItemsPaneWidth,
 		.displayWindowWidth = m_displayWindowWidth,
 		.displayWindowHeight = m_displayWindowHeight };
 }

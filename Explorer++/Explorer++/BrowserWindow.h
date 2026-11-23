@@ -79,9 +79,10 @@ public:
 	virtual void OpenItem(PCIDLIST_ABSOLUTE pidlItem,
 		OpenFolderDisposition openFolderDisposition) = 0;
 
-	// Opens the specified item externally, regardless of whether it's a file or a folder.
-	virtual void OpenFileItem(const std::wstring &itemPath, const std::wstring &parameters) = 0;
-	virtual void OpenFileItem(PCIDLIST_ABSOLUTE pidlItem, const std::wstring &parameters) = 0;
+	// Opens the specified item externally, regardless of whether it's a file or a folder. Returns
+	// true if the item was successfully opened.
+	virtual bool OpenFileItem(const std::wstring &itemPath, const std::wstring &parameters) = 0;
+	virtual bool OpenFileItem(PCIDLIST_ABSOLUTE pidlItem, const std::wstring &parameters) = 0;
 
 	virtual ShellBrowser *GetActiveShellBrowser() = 0;
 	virtual const ShellBrowser *GetActiveShellBrowser() const = 0;

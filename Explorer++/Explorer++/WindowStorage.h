@@ -32,6 +32,7 @@ struct WindowStorageData
 	std::vector<RebarBandStorageData> mainRebarInfo;
 	std::optional<MainToolbarLayout> mainToolbarLayout;
 	int treeViewWidth = LayoutDefaults::DEFAULT_TREEVIEW_WIDTH;
+	int recentItemsPaneWidth = LayoutDefaults::DEFAULT_RECENT_ITEMS_PANE_WIDTH;
 	int displayWindowWidth = LayoutDefaults::DEFAULT_DISPLAY_WINDOW_WIDTH;
 	int displayWindowHeight = LayoutDefaults::DEFAULT_DISPLAY_WINDOW_HEIGHT;
 

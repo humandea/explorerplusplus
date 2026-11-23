@@ -520,6 +520,63 @@
     <ClCompile Include="ModelessDialogHelper.cpp">
       <Filter>Dialog Support</Filter>
     </ClCompile>
+    <ClCompile Include="RecentItems\CompositeRecentItemsDataSource.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItems\DebugRecentItemsDataSource.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItems\FileFrequentLocationsDataSource.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItems\FileHistoryDataSource.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItems\FileSystemPathStatusChecker.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItems\FolderFrequentLocationsDataSource.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItems\FolderHistoryDataSource.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItems\RecentItem.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItems\RecentItemsContextMenu.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItems\RecentItemsIconManager.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItems\RecentItemsPane.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItems\RecentItemsPaneToolbar.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItems\RecentItemsPaneToolbarView.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItems\RecentItemsPaneView.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItems\RecentItemsTreeDelegate.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItems\RecentTreeViewAdapter.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItems\RecentTreeViewNode.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItems\RecentTreeNode.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentItems\RecentTreeBuilder.cpp">
+      <Filter>Recent Items</Filter>
+    </ClCompile>
     <ClCompile Include="RegistryAppStorage.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
@@ -1557,6 +1614,75 @@
     <ClInclude Include="ModelessDialogHelper.h">
       <Filter>Dialog Support</Filter>
     </ClInclude>
+    <ClInclude Include="RecentItems\CompositeRecentItemsDataSource.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\DebugRecentItemsDataSource.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\FileFrequentLocationsDataSource.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\FileHistoryDataSource.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\FileSystemPathStatusChecker.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\FolderFrequentLocationsDataSource.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\FolderHistoryDataSource.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\FeatureVersion.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\PathStatusChecker.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\RecentItem.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\RecentItemsContextMenu.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\RecentItemsDataSource.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\RecentItemsIconManager.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\RecentItemsPane.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\RecentItemsPaneMode.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\RecentItemsPaneToolbar.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\RecentItemsPaneToolbarView.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\RecentItemsPaneView.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\RecentItemsTreeDelegate.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\RecentTreeNode.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\RecentTreeBuilder.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\RecentTreeViewAdapter.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentItems\RecentTreeViewNode.h">
+      <Filter>Recent Items</Filter>
+    </ClInclude>
     <ClInclude Include="RegistryAppStorage.h">
       <Filter>Storage</Filter>
     </ClInclude>
@@ -2432,6 +2558,9 @@
     </Filter>
     <Filter Include="Folders Pane\UI\Views">
       <UniqueIdentifier>{a8a1463f-2443-416d-b624-d1ebb329338c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Recent Items">
+      <UniqueIdentifier>{5e2e7354-bc8c-4636-b687-a73e05887d5c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

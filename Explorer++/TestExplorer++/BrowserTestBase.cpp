@@ -24,6 +24,7 @@ BrowserTestBase::BrowserTestBase() :
 	m_historyTracker(&m_historyModel, &m_navigationEvents),
 	m_frequentLocationsModel(m_platformContext.GetSystemClock()),
 	m_frequentLocationsTracker(&m_frequentLocationsModel, &m_navigationEvents),
+	m_fileFrequentLocationsModel(m_platformContext.GetSystemClock()),
 	m_browserWindowFactory(
 		[this](const WindowStorageData &storageData) { return AddBrowser(storageData); }),
 	m_tabRestorer(&m_tabEvents, &m_browserList),
@@ -54,6 +55,8 @@ void BrowserTestBase::SetUpAppServices()
 	m_appServices.SetFeatureList(&m_featureList);
 	m_appServices.SetFrequentLocationsModel(&m_frequentLocationsModel);
 	m_appServices.SetHistoryModel(&m_historyModel);
+	m_appServices.SetFileFrequentLocationsModel(&m_fileFrequentLocationsModel);
+	m_appServices.SetFileHistoryModel(&m_fileHistoryModel);
 	m_appServices.SetModelessDialogList(&m_modelessDialogList);
 	m_appServices.SetNavigationEvents(&m_navigationEvents);
 	m_appServices.SetPlatformContext(&m_platformContext);

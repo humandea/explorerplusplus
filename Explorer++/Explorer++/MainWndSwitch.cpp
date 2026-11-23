@@ -322,6 +322,11 @@ LRESULT Explorerplusplus::HandleMenuOrToolbarButtonOrAccelerator(HWND hwnd, UINT
 		m_commandController.ExecuteCommand(IDM_VIEW_FOLDERS);
 		break;
 
+	case ToUnderlying(MainToolbarButtonId::Recent):
+	case IDM_VIEW_RECENT_ITEMS:
+		m_commandController.ExecuteCommand(IDM_VIEW_RECENT_ITEMS);
+		break;
+
 	case IDM_VIEW_DISPLAYWINDOW:
 		m_commandController.ExecuteCommand(id);
 		break;

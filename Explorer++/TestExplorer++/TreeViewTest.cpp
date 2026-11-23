@@ -255,6 +255,25 @@ TEST_F(TreeViewTest, ExpandCollapseCallbacks)
 	m_treeView->CollapseNode(node);
 }
 
+TEST_F(TreeViewTest, UserCollapsePreventedWhenCollapsingDisabled)
+{
+	auto *node = m_adapter.AddNode(m_adapter.GetRoot(), std::make_unique<TreeViewNodeFake>());
+	m_adapter.AddNode(node, std::make_unique<TreeViewNodeFake>());
+
+	m_treeView->ExpandNode(node);
+	EXPECT_TRUE(m_treeView->IsNodeExpanded(node));
+
+	m_treeView->SetNodeCollapsingDisabled(true);
+
+	// A left keypress collapses the selected node. The collapse is user-initiated, so it goes
+	// through the TVN_ITEMEXPANDING notification and is prevented. Note that a programmatic
+	// collapse (TreeView::CollapseNode) doesn't go through that notification, so it wouldn't be
+	// prevented.
+	SendMessage(m_treeViewWindow, WM_KEYDOWN, VK_LEFT, 0);
+
+	EXPECT_TRUE(m_treeView->IsNodeExpanded(node));
+}
+
 TEST_F(TreeViewTest, EditingText)
 {
 	auto node = std::make_unique<TreeViewNodeFake>();

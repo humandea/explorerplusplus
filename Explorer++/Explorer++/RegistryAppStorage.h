@@ -22,6 +22,7 @@ public:
 	void LoadDialogStates() override;
 	void LoadDefaultColumns(FolderColumns &defaultColumns) override;
 	void LoadFrequentLocations(FrequentLocationsModel *frequentLocationsModel) override;
+	void LoadFileFrequentLocations(FrequentLocationsModel *fileFrequentLocationsModel) override;
 
 	void SaveConfig(const Config &config) override;
 	void SaveWindows(const std::vector<WindowStorageData> &windows) override;
@@ -31,6 +32,8 @@ public:
 	void SaveDialogStates() override;
 	void SaveDefaultColumns(const FolderColumns &defaultColumns) override;
 	void SaveFrequentLocations(const FrequentLocationsModel *frequentLocationsModel) override;
+	void SaveFileFrequentLocations(
+		const FrequentLocationsModel *fileFrequentLocationsModel) override;
 	void Commit() override;
 
 private:

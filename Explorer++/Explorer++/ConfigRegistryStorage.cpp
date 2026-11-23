@@ -24,6 +24,8 @@ void LoadFromKey(HKEY settingsKey, Config &config)
 	RegistrySettings::Read32BitValueFromRegistry(settingsKey, L"ShowStatusBar",
 		config.showStatusBar);
 	RegistrySettings::Read32BitValueFromRegistry(settingsKey, L"ShowFolders", config.showFolders);
+	RegistrySettings::Read32BitValueFromRegistry(settingsKey, L"ShowRecentItemsPane",
+		config.showRecentItemsPane);
 	RegistrySettings::Read32BitValueFromRegistry(settingsKey, L"ShowAddressBar",
 		config.showAddressBar);
 	RegistrySettings::Read32BitValueFromRegistry(settingsKey, L"ShowToolbar",
@@ -237,6 +239,8 @@ void SaveToKey(HKEY settingsKey, const Config &config)
 		config.globalFolderSettings.showExtensions);
 	RegistrySettings::SaveDword(settingsKey, L"ShowStatusBar", config.showStatusBar.get());
 	RegistrySettings::SaveDword(settingsKey, L"ShowFolders", config.showFolders.get());
+	RegistrySettings::SaveDword(settingsKey, L"ShowRecentItemsPane",
+		config.showRecentItemsPane.get());
 	RegistrySettings::SaveDword(settingsKey, L"ShowAddressBar", config.showAddressBar.get());
 	RegistrySettings::SaveDword(settingsKey, L"ShowToolbar", config.showMainToolbar.get());
 	RegistrySettings::SaveDword(settingsKey, L"ShowBookmarksToolbar",

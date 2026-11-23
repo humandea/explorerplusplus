@@ -199,6 +199,7 @@ void LoadFromNode(IXMLDOMNode *settingsNode, Config &config)
 	GetBoolSetting(settingsNode, L"ShowExtensions", config.globalFolderSettings.showExtensions);
 	GetBoolSetting(settingsNode, L"ShowFilePreviews", config.showFilePreviews);
 	GetBoolSetting(settingsNode, L"ShowFolders", config.showFolders);
+	GetBoolSetting(settingsNode, L"ShowRecentItemsPane", config.showRecentItemsPane);
 	GetBoolSetting(settingsNode, L"ShowFolderSizes", config.globalFolderSettings.showFolderSizes);
 	GetBoolSetting(settingsNode, L"ShowFriendlyDates",
 		config.globalFolderSettings.showFriendlyDates);
@@ -407,6 +408,8 @@ void SaveToNode(IXMLDOMDocument *xmlDocument, IXMLDOMElement *settingsNode, cons
 		L"ShowFilePreviews", XMLSettings::EncodeBoolValue(config.showFilePreviews));
 	XMLSettings::WriteStandardSetting(xmlDocument, settingsNode, SETTING_NODE_NAME, L"ShowFolders",
 		XMLSettings::EncodeBoolValue(config.showFolders.get()));
+	XMLSettings::WriteStandardSetting(xmlDocument, settingsNode, SETTING_NODE_NAME,
+		L"ShowRecentItemsPane", XMLSettings::EncodeBoolValue(config.showRecentItemsPane.get()));
 	XMLSettings::WriteStandardSetting(xmlDocument, settingsNode, SETTING_NODE_NAME,
 		L"ShowFolderSizes",
 		XMLSettings::EncodeBoolValue(config.globalFolderSettings.showFolderSizes));

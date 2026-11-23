@@ -24,6 +24,7 @@ class MainRebarView;
 class MainToolbarView;
 class MenuView;
 class NavigationRequest;
+class RecentItemsPaneView;
 class ResourceLoader;
 class ShellBrowser;
 class StatusBarView;
@@ -61,6 +62,7 @@ public:
 	Applications::ApplicationToolbarView *GetApplicationToolbarView() const;
 
 	FoldersPaneView *GetFoldersPaneView() const;
+	RecentItemsPaneView *GetRecentItemsPaneView() const;
 	BrowserPaneView *GetBrowserPaneView() const;
 	StatusBarView *GetStatusBarView() const;
 
@@ -116,6 +118,7 @@ private:
 	std::unique_ptr<Applications::ApplicationToolbarView> m_applicationToolbarView;
 
 	std::unique_ptr<FoldersPaneView> m_foldersPaneView;
+	std::unique_ptr<RecentItemsPaneView> m_recentItemsPaneView;
 	std::unique_ptr<BrowserPaneView> m_browserPaneView;
 	std::unique_ptr<StatusBarView> m_statusBarView;
 };

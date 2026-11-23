@@ -41,6 +41,7 @@ constexpr MainToolbarButtonId DEFAULT_TOOLBAR_BUTTONS[] = {
 	MainToolbarButtonId::Up,
 	MainToolbarButtonId::Separator,
 	MainToolbarButtonId::Folders,
+	MainToolbarButtonId::Recent,
 	MainToolbarButtonId::Separator,
 	MainToolbarButtonId::Cut,
 	MainToolbarButtonId::Copy,
@@ -73,6 +74,7 @@ constexpr auto BUTTON_ICON_MAPPINGS = std::to_array<ButtonIconMapping>({
 	{ MainToolbarButtonId::Forward, Icon::Forward },
 	{ MainToolbarButtonId::Up, Icon::Up },
 	{ MainToolbarButtonId::Folders, Icon::FolderTree },
+	{ MainToolbarButtonId::Recent, Icon::Recent },
 	{ MainToolbarButtonId::CopyTo, Icon::CopyTo },
 	{ MainToolbarButtonId::MoveTo, Icon::MoveTo },
 	{ MainToolbarButtonId::NewFolder, Icon::NewFolder },
@@ -372,6 +374,38 @@ private:
 	std::vector<boost::signals2::scoped_connection> m_connections;
 };
 
+class MainToolbarRecentButton : public MainToolbarButton
+{
+public:
+	MainToolbarRecentButton(int imageIndex, BrowserWindow *browser, const Config *config,
+		const ResourceLoader *resourceLoader) :
+		MainToolbarButton(MainToolbarButtonId::Recent, imageIndex, browser, resourceLoader),
+		m_config(config)
+	{
+		m_connections.push_back(m_config->showRecentItemsPane.addObserver(
+			std::bind(&MainToolbarRecentButton::OnShowRecentItemsPaneUpdated, this)));
+	}
+
+	bool ShouldShowText() const override
+	{
+		return true;
+	}
+
+	bool IsChecked() const override
+	{
+		return m_config->showRecentItemsPane.get();
+	}
+
+private:
+	void OnShowRecentItemsPaneUpdated()
+	{
+		NotifyParentOfUpdate();
+	}
+
+	const Config *const m_config;
+	std::vector<boost::signals2::scoped_connection> m_connections;
+};
+
 class MainToolbarViewsButton : public MainToolbarButton
 {
 public:
@@ -424,8 +458,27 @@ void MainToolbar::Initialize(const std::optional<MainToolbarLayout> &initialLayo
 
 	InitializeAvailableButtons();
 	m_view->SetDefaultItems(ToToolbarItems(GetDefaultButtons()));
-	m_view->SetItems(
-		ToToolbarItems(initialLayout ? initialLayout->GetButtons() : GetDefaultButtons()));
+
+	auto buttons = initialLayout ? initialLayout->GetButtons() : GetDefaultButtons();
+
+	// The Recent button was added after toolbar layout persistence was introduced. If a saved
+	// layout doesn't contain it, insert it next to the Folders button so that it appears for users
+	// with an existing layout.
+	if (std::find(buttons.begin(), buttons.end(), MainToolbarButtonId::Recent) == buttons.end())
+	{
+		auto foldersItr = std::find(buttons.begin(), buttons.end(), MainToolbarButtonId::Folders);
+
+		if (foldersItr != buttons.end())
+		{
+			buttons.insert(foldersItr + 1, MainToolbarButtonId::Recent);
+		}
+		else
+		{
+			buttons.push_back(MainToolbarButtonId::Recent);
+		}
+	}
+
+	m_view->SetItems(ToToolbarItems(buttons));
 
 	m_connections.push_back(m_browser->AddLifecycleStateChangedObserver(
 		std::bind_front(&MainToolbar::OnBrowserLifecycleStateChanged, this)));
@@ -553,6 +606,10 @@ std::unique_ptr<ToolbarButton> MainToolbar::CreateButtonForId(MainToolbarButtonI
 		return std::make_unique<MainToolbarFoldersButton>(imageIndex, m_browser, m_config,
 			m_resourceLoader);
 
+	case MainToolbarButtonId::Recent:
+		return std::make_unique<MainToolbarRecentButton>(imageIndex, m_browser, m_config,
+			m_resourceLoader);
+
 	case MainToolbarButtonId::Views:
 		return std::make_unique<MainToolbarViewsButton>(imageIndex, m_browser,
 			m_appServices->GetAcceleratorManager(), m_resourceLoader);
@@ -613,6 +670,15 @@ void MainToolbar::OnBrowserLifecycleStateChanged(BrowserWindow::LifecycleState u
 	if (updatedState == BrowserWindow::LifecycleState::Main)
 	{
 		UpdateToolbarButtonStates();
+
+		// The window is now visible. Buttons that show text are measured by the toolbar control
+		// with extra padding while the window is hidden, so the buttons are updated here to
+		// re-measure their sizes now that the real font and DPI are in effect.
+		for (auto &[id, button] : m_idToButtonMap)
+		{
+			UNREFERENCED_PARAMETER(id);
+			m_view->UpdateButton(button);
+		}
 	}
 }
 
@@ -741,6 +807,10 @@ std::wstring GetButtonText(MainToolbarButtonId buttonId, const ResourceLoader *r
 
 	case MainToolbarButtonId::Folders:
 		stringId = IDS_TOOLBAR_FOLDERS;
+		break;
+
+	case MainToolbarButtonId::Recent:
+		stringId = IDS_TOOLBAR_RECENT;
 		break;
 
 	case MainToolbarButtonId::CopyTo:

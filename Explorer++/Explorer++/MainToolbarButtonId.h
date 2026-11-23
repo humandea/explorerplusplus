@@ -16,6 +16,7 @@ enum class MainToolbarButtonId
 	Forward = 45003,
 	Up = 45004,
 	Folders = 45005,
+	Recent = 45026,
 	CopyTo = 45006,
 	MoveTo = 45007,
 	NewFolder = 45008,
@@ -41,5 +42,5 @@ template <>
 struct magic_enum::customize::enum_range<MainToolbarButtonId>
 {
 	static constexpr int min = 45001;
-	static constexpr int max = 45025;
+	static constexpr int max = 45026;
 };

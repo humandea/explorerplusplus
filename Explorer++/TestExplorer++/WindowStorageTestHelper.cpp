@@ -33,6 +33,7 @@ std::vector<WindowStorageData> BuildV2ReferenceWindows(TestStorageType storageTy
 				MainToolbarButtonId::Delete,
 			}),
 			.treeViewWidth = 430,
+			.recentItemsPaneWidth = 214,
 			.displayWindowWidth = 610,
 			.displayWindowHeight = 429,
 		},
@@ -54,6 +55,7 @@ std::vector<WindowStorageData> BuildV2ReferenceWindows(TestStorageType storageTy
 				MainToolbarButtonId::NewTab,
 			}),
 			.treeViewWidth = 57,
+			.recentItemsPaneWidth = 913,
 			.displayWindowWidth = 176,
 			.displayWindowHeight = 827,
 		},
@@ -73,6 +75,7 @@ std::vector<WindowStorageData> BuildV2ReferenceWindows(TestStorageType storageTy
 				MainToolbarButtonId::CloseTab,
 			}),
 			.treeViewWidth = 844,
+			.recentItemsPaneWidth = 155,
 			.displayWindowWidth = 140,
 			.displayWindowHeight = 211,
 		}
@@ -100,6 +103,7 @@ WindowStorageData BuildV2FallbackReferenceWindow(TestStorageType storageType)
 			MainToolbarButtonId::OpenCommandPrompt,
 		}),
 		.treeViewWidth = 117,
+			.recentItemsPaneWidth = LayoutDefaults::DEFAULT_RECENT_ITEMS_PANE_WIDTH,
 		.displayWindowWidth = 66,
 		.displayWindowHeight = 595,
 	};
@@ -125,6 +129,7 @@ WindowStorageData BuildV1ReferenceWindow(TestStorageType storageType)
 			MainToolbarButtonId::Up,
 		}),
 		.treeViewWidth = 1014,
+			.recentItemsPaneWidth = LayoutDefaults::DEFAULT_RECENT_ITEMS_PANE_WIDTH,
 		.displayWindowWidth = 212,
 		.displayWindowHeight = 340,
 	};

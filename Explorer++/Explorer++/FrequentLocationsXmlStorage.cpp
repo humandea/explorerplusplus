@@ -22,6 +22,8 @@ namespace
 
 constexpr wchar_t FREQUENT_LOCATIONS_NODE_NAME[] = L"FrequentLocations";
 constexpr wchar_t FREQUENT_LOCATION_NODE_NAME[] = L"FrequentLocation";
+constexpr wchar_t FILE_FREQUENT_LOCATIONS_NODE_NAME[] = L"FileFrequentLocations";
+constexpr wchar_t FILE_FREQUENT_LOCATION_NODE_NAME[] = L"FileFrequentLocation";
 
 constexpr wchar_t SETTING_LOCATION[] = L"Location";
 constexpr wchar_t SETTING_NUM_VISITS[] = L"NumVisits";
@@ -94,10 +96,11 @@ std::optional<LocationVisitInfo> LoadFrequentLocation(IXMLDOMNode *frequentLocat
 			FrequentLocationsStorageHelper::StorageDurationType(timeSinceEpoch)) };
 }
 
-void LoadFromNode(IXMLDOMNode *frequentLocationsNode, FrequentLocationsModel *model)
+void LoadFromNode(IXMLDOMNode *frequentLocationsNode, const wchar_t *frequentLocationNodeName,
+	FrequentLocationsModel *model)
 {
 	wil::com_ptr_nothrow<IXMLDOMNodeList> frequentLocationNodes;
-	auto queryString = wil::make_bstr_nothrow(FREQUENT_LOCATION_NODE_NAME);
+	auto queryString = wil::make_bstr_nothrow(frequentLocationNodeName);
 	HRESULT hr = frequentLocationsNode->selectNodes(queryString.get(), &frequentLocationNodes);
 
 	if (hr != S_OK)
@@ -144,15 +147,15 @@ void SaveFrequentLocation(IXMLDOMDocument *xmlDocument, IXMLDOMElement *frequent
 }
 
 void SaveToNode(IXMLDOMDocument *xmlDocument, IXMLDOMElement *frequentLocationsNode,
-	const FrequentLocationsModel *model)
+	const wchar_t *frequentLocationNodeName, const FrequentLocationsModel *model)
 {
 	for (const auto &frequentLocation :
 		model->GetVisits() | std::views::take(FrequentLocationsStorageHelper::MAX_ITEMS_TO_STORE))
 	{
 		wil::com_ptr_nothrow<IXMLDOMElement> frequentLocationNode;
-		auto frequentLocationNodeName = wil::make_bstr_nothrow(FREQUENT_LOCATION_NODE_NAME);
+		auto frequentLocationNodeNameStr = wil::make_bstr_nothrow(frequentLocationNodeName);
 		HRESULT hr =
-			xmlDocument->createElement(frequentLocationNodeName.get(), &frequentLocationNode);
+			xmlDocument->createElement(frequentLocationNodeNameStr.get(), &frequentLocationNode);
 
 		if (hr == S_OK)
 		{
@@ -178,7 +181,7 @@ void Load(IXMLDOMNode *rootNode, FrequentLocationsModel *model)
 		return;
 	}
 
-	LoadFromNode(frequentLocationsNode.get(), model);
+	LoadFromNode(frequentLocationsNode.get(), FREQUENT_LOCATION_NODE_NAME, model);
 }
 
 void Save(IXMLDOMDocument *xmlDocument, IXMLDOMNode *rootNode, const FrequentLocationsModel *model)
@@ -192,7 +195,38 @@ void Save(IXMLDOMDocument *xmlDocument, IXMLDOMNode *rootNode, const FrequentLoc
 		return;
 	}
 
-	SaveToNode(xmlDocument, frequentLocationsNode.get(), model);
+	SaveToNode(xmlDocument, frequentLocationsNode.get(), FREQUENT_LOCATION_NODE_NAME, model);
+
+	XMLSettings::AppendChildToParent(frequentLocationsNode.get(), rootNode);
+}
+
+void LoadFiles(IXMLDOMNode *rootNode, FrequentLocationsModel *model)
+{
+	wil::com_ptr_nothrow<IXMLDOMNode> frequentLocationsNode;
+	auto queryString = wil::make_bstr_nothrow(FILE_FREQUENT_LOCATIONS_NODE_NAME);
+	HRESULT hr = rootNode->selectSingleNode(queryString.get(), &frequentLocationsNode);
+
+	if (hr != S_OK)
+	{
+		return;
+	}
+
+	LoadFromNode(frequentLocationsNode.get(), FILE_FREQUENT_LOCATION_NODE_NAME, model);
+}
+
+void SaveFiles(IXMLDOMDocument *xmlDocument, IXMLDOMNode *rootNode,
+	const FrequentLocationsModel *model)
+{
+	wil::com_ptr_nothrow<IXMLDOMElement> frequentLocationsNode;
+	auto nodeName = wil::make_bstr_nothrow(FILE_FREQUENT_LOCATIONS_NODE_NAME);
+	HRESULT hr = xmlDocument->createElement(nodeName.get(), &frequentLocationsNode);
+
+	if (hr != S_OK)
+	{
+		return;
+	}
+
+	SaveToNode(xmlDocument, frequentLocationsNode.get(), FILE_FREQUENT_LOCATION_NODE_NAME, model);
 
 	XMLSettings::AppendChildToParent(frequentLocationsNode.get(), rootNode);
 }

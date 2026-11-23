@@ -4,6 +4,8 @@
 
 #include "stdafx.h"
 #include "AppServices.h"
+#include "FileFrequentLocationsModel.h"
+#include "FileHistoryModel.h"
 
 AcceleratorManager *AppServices::GetAcceleratorManager()
 {
@@ -238,6 +240,37 @@ const FeatureList *AppServices::GetFeatureList() const
 void AppServices::SetFeatureList(FeatureList *featureList)
 {
 	Set(featureList);
+}
+
+FileFrequentLocationsModel *AppServices::GetFileFrequentLocationsModel()
+{
+	return Get<FileFrequentLocationsModel>();
+}
+
+const FileFrequentLocationsModel *AppServices::GetFileFrequentLocationsModel() const
+{
+	return Get<FileFrequentLocationsModel>();
+}
+
+void AppServices::SetFileFrequentLocationsModel(
+	FileFrequentLocationsModel *fileFrequentLocationsModel)
+{
+	Set(fileFrequentLocationsModel);
+}
+
+FileHistoryModel *AppServices::GetFileHistoryModel()
+{
+	return Get<FileHistoryModel>();
+}
+
+const FileHistoryModel *AppServices::GetFileHistoryModel() const
+{
+	return Get<FileHistoryModel>();
+}
+
+void AppServices::SetFileHistoryModel(FileHistoryModel *fileHistoryModel)
+{
+	Set(fileHistoryModel);
 }
 
 FrequentLocationsModel *AppServices::GetFrequentLocationsModel()

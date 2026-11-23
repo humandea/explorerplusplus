@@ -61,6 +61,12 @@ void RegistryAppStorage::LoadFrequentLocations(FrequentLocationsModel *frequentL
 	FrequentLocationsRegistryStorage::Load(m_applicationKey.get(), frequentLocationsModel);
 }
 
+void RegistryAppStorage::LoadFileFrequentLocations(
+	FrequentLocationsModel *fileFrequentLocationsModel)
+{
+	FrequentLocationsRegistryStorage::LoadFiles(m_applicationKey.get(), fileFrequentLocationsModel);
+}
+
 void RegistryAppStorage::SaveConfig(const Config &config)
 {
 	ConfigRegistryStorage::Save(m_applicationKey.get(), config);
@@ -99,6 +105,12 @@ void RegistryAppStorage::SaveDefaultColumns(const FolderColumns &defaultColumns)
 void RegistryAppStorage::SaveFrequentLocations(const FrequentLocationsModel *frequentLocationsModel)
 {
 	FrequentLocationsRegistryStorage::Save(m_applicationKey.get(), frequentLocationsModel);
+}
+
+void RegistryAppStorage::SaveFileFrequentLocations(
+	const FrequentLocationsModel *fileFrequentLocationsModel)
+{
+	FrequentLocationsRegistryStorage::SaveFiles(m_applicationKey.get(), fileFrequentLocationsModel);
 }
 
 void RegistryAppStorage::Commit()

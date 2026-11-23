@@ -16,6 +16,7 @@
 #include "MainRebarView.h"
 #include "MainResource.h"
 #include "MainToolbarView.h"
+#include "RecentItems/RecentItemsPaneView.h"
 #include "ResourceLoader.h"
 #include "ShellBrowser/NavigationEvents.h"
 #include "ShellBrowser/ShellBrowserEvents.h"
@@ -76,6 +77,13 @@ BrowserView::BrowserView(BrowserWindow *browser, const RECT &bounds, AppServices
 
 	m_foldersPaneView = std::make_unique<FoldersPaneView>(this, m_browser,
 		appServices->GetThemeManager(), m_config, m_resourceLoader);
+
+#ifdef _DEBUG
+	// The recent items pane is only created in debug builds for now. It will be shown via a View
+	// menu item once the required settings have been added.
+	m_recentItemsPaneView = std::make_unique<RecentItemsPaneView>(this, m_browser,
+		appServices->GetThemeManager(), m_config, m_resourceLoader);
+#endif
 
 	m_browserPaneView = std::make_unique<BrowserPaneView>(this, appServices->GetThemeManager(),
 		m_config, m_resourceLoader);
@@ -187,6 +195,11 @@ Applications::ApplicationToolbarView *BrowserView::GetApplicationToolbarView() c
 FoldersPaneView *BrowserView::GetFoldersPaneView() const
 {
 	return m_foldersPaneView.get();
+}
+
+RecentItemsPaneView *BrowserView::GetRecentItemsPaneView() const
+{
+	return m_recentItemsPaneView.get();
 }
 
 BrowserPaneView *BrowserView::GetBrowserPaneView() const

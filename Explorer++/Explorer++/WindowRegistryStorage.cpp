@@ -119,6 +119,7 @@ const wchar_t SETTING_HEIGHT[] = L"Height";
 const wchar_t SETTING_SHOW_STATE[] = L"ShowState";
 const wchar_t SETTING_SELECTED_TAB[] = L"SelectedTab";
 const wchar_t SETTING_TREEVIEW_WIDTH[] = L"TreeViewWidth";
+const wchar_t SETTING_RECENT_ITEMS_PANE_WIDTH[] = L"RecentItemsPaneWidth";
 const wchar_t SETTING_DISPLAY_WINDOW_WIDTH[] = L"DisplayWindowWidth";
 const wchar_t SETTING_DISPLAY_WINDOW_HEIGHT[] = L"DisplayWindowHeight";
 const wchar_t SETTING_MAIN_TOOLBAR_BUTTONS[] = L"MainToolbarButtons";
@@ -205,6 +206,10 @@ std::optional<WindowStorageData> LoadWindow(HKEY applicationKey, HKEY windowKey,
 			treeViewWidth);
 	}
 
+	int recentItemsPaneWidth = LayoutDefaults::DEFAULT_RECENT_ITEMS_PANE_WIDTH;
+	RegistrySettings::Read32BitValueFromRegistry(windowKey, SETTING_RECENT_ITEMS_PANE_WIDTH,
+		recentItemsPaneWidth);
+
 	int displayWindowWidth = LayoutDefaults::DEFAULT_DISPLAY_WINDOW_WIDTH;
 	res = RegistrySettings::Read32BitValueFromRegistry(windowKey, SETTING_DISPLAY_WINDOW_WIDTH,
 		displayWindowWidth);
@@ -253,6 +258,7 @@ std::optional<WindowStorageData> LoadWindow(HKEY applicationKey, HKEY windowKey,
 		.mainRebarInfo = mainRebarInfo,
 		.mainToolbarLayout = mainToolbarLayout,
 		.treeViewWidth = treeViewWidth,
+		.recentItemsPaneWidth = recentItemsPaneWidth,
 		.displayWindowWidth = displayWindowWidth,
 		.displayWindowHeight = displayWindowHeight };
 }
@@ -296,6 +302,8 @@ void SaveWindow(HKEY windowKey, const WindowStorageData &window)
 		static_cast<DWORD>(window.showState));
 	RegistrySettings::SaveDword(windowKey, SETTING_SELECTED_TAB, window.selectedTab);
 	RegistrySettings::SaveDword(windowKey, SETTING_TREEVIEW_WIDTH, window.treeViewWidth);
+	RegistrySettings::SaveDword(windowKey, SETTING_RECENT_ITEMS_PANE_WIDTH,
+		window.recentItemsPaneWidth);
 	RegistrySettings::SaveDword(windowKey, SETTING_DISPLAY_WINDOW_WIDTH, window.displayWindowWidth);
 	RegistrySettings::SaveDword(windowKey, SETTING_DISPLAY_WINDOW_HEIGHT,
 		window.displayWindowHeight);

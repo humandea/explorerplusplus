@@ -8,10 +8,22 @@
 #include "TestHelper.h"
 #include "TreeViewAdapter.h"
 #include "../Helper/AutoReset.h"
+#include "../Helper/DpiCompatibility.h"
 #include "../Helper/KeyboardState.h"
 #include "../Helper/WindowSubclass.h"
 #include <wil/common.h>
 #include <windowsx.h>
+
+namespace
+{
+
+// The gap in between the main text and the secondary text, in pixels at 96 DPI.
+constexpr int SECONDARY_TEXT_GAP = 4;
+
+// The size of the secondary text, as a percentage of the size of the main text.
+constexpr int SECONDARY_FONT_SIZE_PERCENTAGE = 80;
+
+}
 
 TreeView::TreeView(HWND hwnd, const KeyboardState *keyboardState,
 	LabelEditHandlerFactory labelEditHandlerFactory) :
@@ -48,6 +60,11 @@ void TreeView::SetAdapter(TreeViewAdapter *adapter)
 void TreeView::SetDelegate(TreeViewDelegate *delegate)
 {
 	m_delegate = delegate ? delegate : &m_noOpDelegate;
+}
+
+void TreeView::SetNodeCollapsingDisabled(bool disabled)
+{
+	m_nodeCollapsingDisabled = disabled;
 }
 
 void TreeView::AddExtendedStyles(DWORD styles)
@@ -303,9 +320,27 @@ LRESULT TreeView::ParentWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
 				OnGetDispInfo(reinterpret_cast<NMTVDISPINFO *>(lParam));
 				break;
 
-			case TVN_ITEMEXPANDING:
-				OnNodeExpanding(reinterpret_cast<NMTREEVIEW *>(lParam));
+			case NM_CUSTOMDRAW:
+				return OnCustomDraw(reinterpret_cast<NMTVCUSTOMDRAW *>(lParam));
+
+			case TVN_GETINFOTIP:
+				OnGetInfoTip(reinterpret_cast<NMTVGETINFOTIP *>(lParam));
 				break;
+
+			case TVN_ITEMEXPANDING:
+			{
+				auto *notifyInfo = reinterpret_cast<NMTREEVIEW *>(lParam);
+
+				if (m_nodeCollapsingDisabled && notifyInfo->action != TVE_EXPAND)
+				{
+					// Collapsing is disabled, so the collapse is prevented. Expanding is still
+					// allowed.
+					return TRUE;
+				}
+
+				OnNodeExpanding(notifyInfo);
+			}
+			break;
 
 			case TVN_KEYDOWN:
 				return OnKeyDown(reinterpret_cast<NMTVKEYDOWN *>(lParam));
@@ -411,6 +446,171 @@ void TreeView::OnGetDispInfo(NMTVDISPINFO *dispInfo)
 	}
 
 	WI_SetFlag(dispInfo->item.mask, TVIF_DI_SETITEM);
+}
+
+LRESULT TreeView::OnCustomDraw(NMTVCUSTOMDRAW *customDraw)
+{
+	switch (customDraw->nmcd.dwDrawStage)
+	{
+	case CDDS_PREPAINT:
+		return CDRF_NOTIFYITEMDRAW;
+
+	case CDDS_ITEMPREPAINT:
+	{
+		// A custom draw notification can be generated for an item that's in the process of being
+		// inserted (in which case the item won't have been added to the handle map yet), so a
+		// lookup failure here simply means the item should be drawn using the standard rendering.
+		auto *node =
+			MaybeGetNodeForHandle(reinterpret_cast<HTREEITEM>(customDraw->nmcd.dwItemSpec));
+
+		if (!node || !node->MaybeGetSecondaryText())
+		{
+			return CDRF_DODEFAULT;
+		}
+
+		DrawItem(customDraw->nmcd.hdc, node,
+			reinterpret_cast<HTREEITEM>(customDraw->nmcd.dwItemSpec), customDraw->nmcd.uItemState);
+		return CDRF_SKIPDEFAULT;
+	}
+	}
+
+	return CDRF_DODEFAULT;
+}
+
+void TreeView::OnGetInfoTip(NMTVGETINFOTIP *infoTip)
+{
+	const auto *node = MaybeGetNodeForHandle(infoTip->hItem);
+
+	if (!node)
+	{
+		return;
+	}
+
+	auto tooltipText = node->MaybeGetTooltipText();
+
+	if (tooltipText)
+	{
+		StringCchCopy(infoTip->pszText, infoTip->cchTextMax, tooltipText->c_str());
+	}
+}
+
+void TreeView::DrawItem(HDC hdc, const TreeViewNode *node, HTREEITEM handle, UINT itemState)
+{
+	// The item can be in the process of being added or deleted, in which case it won't be in the
+	// control yet (or will no longer be in the control). In that situation, there's nothing to
+	// draw.
+	RECT rowRect;
+	auto res = TreeView_GetItemRect(GetHWND(), handle, &rowRect, false);
+
+	if (!res)
+	{
+		return;
+	}
+
+	RECT textRect;
+	res = TreeView_GetItemRect(GetHWND(), handle, &textRect, true);
+
+	if (!res)
+	{
+		return;
+	}
+
+	COLORREF backgroundColor = TreeView_GetBkColor(GetHWND());
+	COLORREF textColor = TreeView_GetTextColor(GetHWND());
+
+	if (WI_IsFlagSet(itemState, CDIS_SELECTED))
+	{
+		backgroundColor = GetSysColor(COLOR_HIGHLIGHT);
+		textColor = GetSysColor(COLOR_HIGHLIGHTTEXT);
+	}
+	else if (node->IsGhosted())
+	{
+		textColor = GetSysColor(COLOR_GRAYTEXT);
+	}
+
+	wil::unique_hbrush backgroundBrush(CreateSolidBrush(backgroundColor));
+	FillRect(hdc, &rowRect, backgroundBrush.get());
+
+	SetBkMode(hdc, TRANSPARENT);
+	SetTextColor(hdc, textColor);
+
+	if (m_imageList)
+	{
+		int iconWidth = 0;
+		int iconHeight = 0;
+		auto iconSizeRes = ImageList_GetIconSize(m_imageList.get(), &iconWidth, &iconHeight);
+		CHECK(iconSizeRes);
+
+		POINT iconOrigin = { textRect.left - iconWidth,
+			rowRect.top + ((rowRect.bottom - rowRect.top) - iconHeight) / 2 };
+
+		if (auto iconIndex = node->GetIconIndex())
+		{
+			ImageList_Draw(m_imageList.get(), *iconIndex, hdc, iconOrigin.x, iconOrigin.y,
+				ILD_NORMAL);
+		}
+	}
+
+	HFONT mainFont = reinterpret_cast<HFONT>(SendMessage(GetHWND(), WM_GETFONT, 0, 0));
+
+	if (!mainFont)
+	{
+		mainFont = reinterpret_cast<HFONT>(GetStockObject(DEFAULT_GUI_FONT));
+	}
+
+	auto selectMainFont = wil::SelectObject(hdc, mainFont);
+
+	auto secondaryText = node->MaybeGetSecondaryText();
+	auto mainText = node->GetText();
+
+	if (secondaryText->empty())
+	{
+		// Only the main text is drawn, however, it's drawn in the smaller font.
+		auto selectSecondaryFont = wil::SelectObject(hdc, GetSecondaryFont(mainFont));
+		DrawText(hdc, mainText.c_str(), -1, &textRect,
+			DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX);
+		return;
+	}
+
+	// The main text is drawn first. The secondary text is then drawn after it, in the smaller
+	// font, as long as there's enough room remaining.
+	SIZE mainTextSize;
+	auto textExtentRes = GetTextExtentPoint32(hdc, mainText.c_str(),
+		static_cast<int>(mainText.size()), &mainTextSize);
+	CHECK(textExtentRes);
+
+	DrawText(hdc, mainText.c_str(), -1, &textRect,
+		DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX);
+
+	int gap = DpiCompatibility::GetInstance().ScaleValue(GetHWND(), SECONDARY_TEXT_GAP);
+	RECT secondaryRect = { textRect.left + mainTextSize.cx + gap, textRect.top, textRect.right,
+		textRect.bottom };
+
+	if (secondaryRect.left < secondaryRect.right)
+	{
+		auto selectSecondaryFont = wil::SelectObject(hdc, GetSecondaryFont(mainFont));
+		DrawText(hdc, secondaryText->c_str(), -1, &secondaryRect,
+			DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX);
+	}
+}
+
+HFONT TreeView::GetSecondaryFont(HFONT mainFont)
+{
+	if (m_secondaryFontSource != mainFont)
+	{
+		LOGFONT logFont;
+		auto res = GetObject(mainFont, sizeof(logFont), &logFont);
+		CHECK_NE(res, 0);
+
+		// The secondary text is drawn at a smaller size than the main text.
+		logFont.lfHeight = MulDiv(logFont.lfHeight, SECONDARY_FONT_SIZE_PERCENTAGE, 100);
+		m_secondaryFont.reset(CreateFontIndirect(&logFont));
+		CHECK(m_secondaryFont);
+
+		m_secondaryFontSource = mainFont;
+	}
+
+	return m_secondaryFont.get();
 }
 
 void TreeView::OnNodeExpanding(const NMTREEVIEW *notifyInfo)
@@ -571,8 +771,25 @@ TreeViewNode *TreeView::GetSelectedNode()
 
 const TreeViewNode *TreeView::GetSelectedNode() const
 {
+	auto *selectedNode = MaybeGetSelectedNode();
+	CHECK(selectedNode);
+	return selectedNode;
+}
+
+TreeViewNode *TreeView::MaybeGetSelectedNode()
+{
+	return const_cast<TreeViewNode *>(std::as_const(*this).MaybeGetSelectedNode());
+}
+
+const TreeViewNode *TreeView::MaybeGetSelectedNode() const
+{
 	auto selectedHandle = TreeView_GetSelection(GetHWND());
-	CHECK(selectedHandle);
+
+	if (!selectedHandle)
+	{
+		return nullptr;
+	}
+
 	return GetNodeForHandle(selectedHandle);
 }
 
@@ -776,6 +993,18 @@ const TreeViewNode *TreeView::GetNodeForHandle(HTREEITEM handle) const
 {
 	auto itr = m_handleToNodeMap.left.find(handle);
 	CHECK(itr != m_handleToNodeMap.left.end());
+	return itr->second;
+}
+
+const TreeViewNode *TreeView::MaybeGetNodeForHandle(HTREEITEM handle) const
+{
+	auto itr = m_handleToNodeMap.left.find(handle);
+
+	if (itr == m_handleToNodeMap.left.end())
+	{
+		return nullptr;
+	}
+
 	return itr->second;
 }
 

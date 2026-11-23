@@ -61,6 +61,7 @@ App::App(const CommandLine::Settings *commandLineSettings) :
 	m_historyTracker(&m_historyModel, &m_navigationEvents),
 	m_frequentLocationsModel(m_platformContext.GetSystemClock()),
 	m_frequentLocationsTracker(&m_frequentLocationsModel, &m_navigationEvents),
+	m_fileFrequentLocationsModel(m_platformContext.GetSystemClock()),
 	m_driveWatcher(&m_eventWindow),
 	m_driveModel(std::make_unique<DriveEnumeratorImpl>(), &m_driveWatcher),
 	m_pluginCommandManager(&m_acceleratorManager, ACCELERATOR_PLUGIN_START_ID,
@@ -192,6 +193,7 @@ void App::LoadSettings(std::vector<WindowStorageData> &windows)
 	appStorage->LoadDialogStates();
 	appStorage->LoadDefaultColumns(m_config.globalFolderSettings.folderColumns);
 	appStorage->LoadFrequentLocations(&m_frequentLocationsModel);
+	appStorage->LoadFileFrequentLocations(&m_fileFrequentLocationsModel);
 
 	ValidateColumns(m_config.globalFolderSettings.folderColumns);
 }
@@ -238,6 +240,7 @@ void App::SaveSettings()
 	appStorage->SaveDialogStates();
 	appStorage->SaveDefaultColumns(m_config.globalFolderSettings.folderColumns);
 	appStorage->SaveFrequentLocations(&m_frequentLocationsModel);
+	appStorage->SaveFileFrequentLocations(&m_fileFrequentLocationsModel);
 
 	appStorage->Commit();
 }
@@ -306,6 +309,8 @@ void App::SetUpAppServices()
 	m_appServices.SetFeatureList(&m_featureList);
 	m_appServices.SetFrequentLocationsModel(&m_frequentLocationsModel);
 	m_appServices.SetHistoryModel(&m_historyModel);
+	m_appServices.SetFileFrequentLocationsModel(&m_fileFrequentLocationsModel);
+	m_appServices.SetFileHistoryModel(&m_fileHistoryModel);
 	m_appServices.SetModelessDialogList(&m_modelessDialogList);
 	m_appServices.SetNavigationEvents(&m_navigationEvents);
 	m_appServices.SetPlatformContext(&m_platformContext);

@@ -20,6 +20,8 @@ class DarkModeManager;
 class DirectoryWatcherFactory;
 class DriveModel;
 class FeatureList;
+class FileFrequentLocationsModel;
+class FileHistoryModel;
 class FrequentLocationsModel;
 class HistoryModel;
 class ModelessDialogList;
@@ -137,6 +139,14 @@ public:
 	const FeatureList *GetFeatureList() const;
 	void SetFeatureList(FeatureList *featureList);
 
+	FileFrequentLocationsModel *GetFileFrequentLocationsModel();
+	const FileFrequentLocationsModel *GetFileFrequentLocationsModel() const;
+	void SetFileFrequentLocationsModel(FileFrequentLocationsModel *fileFrequentLocationsModel);
+
+	FileHistoryModel *GetFileHistoryModel();
+	const FileHistoryModel *GetFileHistoryModel() const;
+	void SetFileHistoryModel(FileHistoryModel *fileHistoryModel);
+
 	FrequentLocationsModel *GetFrequentLocationsModel();
 	const FrequentLocationsModel *GetFrequentLocationsModel() const;
 	void SetFrequentLocationsModel(FrequentLocationsModel *frequentLocationsModel);
@@ -213,9 +223,10 @@ private:
 		AsyncIconFetcher *, BookmarkTree *, BrowserList *, BrowserWindowFactory *, CachedIcons *,
 		ClipboardWatcher *, ColorRuleModel *, const CommandLine::Settings *, Config *,
 		DarkModeManager *, DirectoryWatcherFactory *, DriveModel *, FeatureList *,
-		FrequentLocationsModel *, HistoryModel *, ModelessDialogList *, NavigationEvents *,
-		PlatformContext *, Plugins::PluginCommandManager *, Plugins::PluginMenuItemsRegistry *,
-		ResourceLoader *, Runtime *, ShellBrowserEvents *, TabEvents *, TabList *, TabRestorer *,
-		ThemeManager *, WindowThemeManager *>
+		FileFrequentLocationsModel *, FileHistoryModel *, FrequentLocationsModel *, HistoryModel *,
+		ModelessDialogList *, NavigationEvents *, PlatformContext *,
+		Plugins::PluginCommandManager *, Plugins::PluginMenuItemsRegistry *, ResourceLoader *,
+		Runtime *, ShellBrowserEvents *, TabEvents *, TabList *, TabRestorer *, ThemeManager *,
+		WindowThemeManager *>
 		m_services;
 };

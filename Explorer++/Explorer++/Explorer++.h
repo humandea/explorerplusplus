@@ -39,6 +39,7 @@ class DisplayWindow;
 class DrivesToolbar;
 class FeatureList;
 class FoldersPane;
+class RecentItemsPane;
 class MainMenu;
 class MainRebar;
 class MainToolbar;
@@ -86,8 +87,8 @@ public:
 	void OpenItem(const std::wstring &itemPath,
 		OpenFolderDisposition openFolderDisposition) override;
 	void OpenItem(PCIDLIST_ABSOLUTE pidlItem, OpenFolderDisposition openFolderDisposition) override;
-	void OpenFileItem(const std::wstring &itemPath, const std::wstring &parameters) override;
-	void OpenFileItem(PCIDLIST_ABSOLUTE pidlItem, const std::wstring &parameters) override;
+	bool OpenFileItem(const std::wstring &itemPath, const std::wstring &parameters) override;
+	bool OpenFileItem(PCIDLIST_ABSOLUTE pidlItem, const std::wstring &parameters) override;
 
 	// Note that there is also GetActiveShellBrowserImpl() declared below. There are some places
 	// where this method can be used, as the calling code only uses methods from the ShellBrowser
@@ -117,6 +118,7 @@ private:
 	static const int DISPLAY_WINDOW_MINIMUM_HEIGHT = 70_px;
 
 	static constexpr int TREEVIEW_MINIMUM_WIDTH = 70_px;
+	static constexpr int RECENT_ITEMS_PANE_MINIMUM_WIDTH = 70_px;
 	static constexpr double TREEVIEW_MAXIMUM_WIDTH_PERCENTAGE = 0.8;
 
 	// Main rebar band IDs. These are used to load and save data, so the values shouldn't be
@@ -171,6 +173,8 @@ private:
 	void OnTabRemoved(const Tab &tab);
 	void CreateFolderControls();
 	void OnFoldersPaneResized(int newWidth);
+	void CreateRecentItemsControls();
+	void OnRecentItemsPaneResized(int newWidth);
 	bool OnActivate(int activationState, bool minimized);
 	void OnSize(UINT state);
 	static concurrencpp::null_result ScheduleUpdateLayout(WeakPtr<Explorerplusplus> self,
@@ -225,6 +229,7 @@ private:
 	void UpdateWindowStates(const Tab &tab);
 
 	void OpenShortcutItem(PCIDLIST_ABSOLUTE pidlItem, OpenFolderDisposition openFolderDisposition);
+	void RecordFileOpened(PCIDLIST_ABSOLUTE pidl);
 
 	void OpenFolderItem(PCIDLIST_ABSOLUTE pidlItem,
 		OpenFolderDisposition openFolderDisposition = OpenFolderDisposition::CurrentTab);
@@ -299,6 +304,8 @@ private:
 	std::unique_ptr<FoldersPane> m_foldersPane;
 	ShellTreeView *m_shellTreeView = nullptr;
 	int m_treeViewWidth = LayoutDefaults::DEFAULT_TREEVIEW_WIDTH;
+	std::unique_ptr<RecentItemsPane> m_recentItemsPane;
+	int m_recentItemsPaneWidth = LayoutDefaults::DEFAULT_RECENT_ITEMS_PANE_WIDTH;
 
 	std::unique_ptr<BrowserPane> m_browserPane;
 

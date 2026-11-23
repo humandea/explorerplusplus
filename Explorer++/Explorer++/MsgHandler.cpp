@@ -13,12 +13,15 @@
 #include "DestroyFilesDialog.h"
 #include "DisplayWindow/DisplayWindow.h"
 #include "FeatureList.h"
+#include "FileFrequentLocationsModel.h"
+#include "FileHistoryModel.h"
 #include "FoldersPaneView.h"
 #include "MainRebarView.h"
 #include "MainResource.h"
 #include "ModelessDialogHelper.h"
 #include "OptionsDialog.h"
 #include "PlatformContext.h"
+#include "RecentItems/RecentItemsPaneView.h"
 #include "Runtime.h"
 #include "SelectColumnsDialog.h"
 #include "ShellBrowser/ColumnHelper.h"
@@ -146,7 +149,17 @@ void Explorerplusplus::OpenShortcutItem(PCIDLIST_ABSOLUTE pidlItem,
 		// handling is turned off. In that situation, the shortcut should still be opened via the
 		// shell. That's because at least one of the shortcut options (window state) will be applied
 		// when opening the shortcut. That won't be the case if the target is executed directly.
-		OpenFileItem(pidlItem, L"");
+		auto shellBrowser = GetActiveShellBrowserImpl();
+		bool opened = ExecuteFileAction(m_hwnd, pidlItem, L"", L"",
+			shellBrowser->InVirtualFolder() ? L"" : shellBrowser->GetDirectoryPath().c_str());
+
+		if (opened)
+		{
+			// Although it's the shortcut that was opened, it's the target file that should be
+			// recorded. That mirrors the way opening a shortcut to a folder results in a visit
+			// being recorded for the target folder (via the navigation that occurs).
+			RecordFileOpened(target.get());
+		}
 	}
 }
 
@@ -227,18 +240,55 @@ void Explorerplusplus::OpenDirectoryInNewWindow(PCIDLIST_ABSOLUTE pidlDirectory)
 	}
 }
 
-void Explorerplusplus::OpenFileItem(const std::wstring &itemPath, const std::wstring &parameters)
+bool Explorerplusplus::OpenFileItem(const std::wstring &itemPath, const std::wstring &parameters)
 {
 	auto shellBrowser = GetActiveShellBrowserImpl();
-	ExecuteFileAction(m_hwnd, itemPath, L"", parameters,
+	bool opened = ExecuteFileAction(m_hwnd, itemPath, L"", parameters,
 		shellBrowser->InVirtualFolder() ? L"" : shellBrowser->GetDirectoryPath().c_str());
+
+	if (opened)
+	{
+		unique_pidl_absolute pidl;
+		HRESULT hr =
+			SHParseDisplayName(itemPath.c_str(), nullptr, wil::out_param(pidl), 0, nullptr);
+
+		if (SUCCEEDED(hr))
+		{
+			RecordFileOpened(pidl.get());
+		}
+	}
+
+	return opened;
 }
 
-void Explorerplusplus::OpenFileItem(PCIDLIST_ABSOLUTE pidlItem, const std::wstring &parameters)
+bool Explorerplusplus::OpenFileItem(PCIDLIST_ABSOLUTE pidlItem, const std::wstring &parameters)
 {
 	auto shellBrowser = GetActiveShellBrowserImpl();
-	ExecuteFileAction(m_hwnd, pidlItem, L"", parameters,
+	bool opened = ExecuteFileAction(m_hwnd, pidlItem, L"", parameters,
 		shellBrowser->InVirtualFolder() ? L"" : shellBrowser->GetDirectoryPath().c_str());
+
+	if (opened)
+	{
+		RecordFileOpened(pidlItem);
+	}
+
+	return opened;
+}
+
+void Explorerplusplus::RecordFileOpened(PCIDLIST_ABSOLUTE pidl)
+{
+	// Only real filesystem files are recorded. Virtual items (e.g. items in Control Panel) are
+	// excluded.
+	SFGAOF attributes = SFGAO_FILESYSTEM;
+	HRESULT hr = GetItemAttributes(pidl, &attributes);
+
+	if (FAILED(hr) || WI_IsFlagClear(attributes, SFGAO_FILESYSTEM))
+	{
+		return;
+	}
+
+	m_appServices->GetFileHistoryModel()->AddHistoryItem(pidl);
+	m_appServices->GetFileFrequentLocationsModel()->RegisterLocationVisit(pidl);
 }
 
 void Explorerplusplus::OnSize(UINT state)
@@ -313,6 +363,21 @@ void Explorerplusplus::UpdateLayout()
 
 	int indentRebar = rebarHeight;
 
+	// The recent items pane sits at the far right of the window. It's only created in debug
+	// builds for now.
+	int recentItemsPaneWidth = 0;
+
+#ifdef _DEBUG
+	if (m_recentItemsPane && m_config->showRecentItemsPane.get())
+	{
+		recentItemsPaneWidth = std::clamp(m_recentItemsPaneWidth,
+			dpiCompatibility.ScaleValue(m_view.GetRecentItemsPaneView()->GetHWND(),
+				RECENT_ITEMS_PANE_MINIMUM_WIDTH),
+			static_cast<int>(TREEVIEW_MAXIMUM_WIDTH_PERCENTAGE * mainWindowWidth));
+		m_recentItemsPaneWidth = recentItemsPaneWidth;
+	}
+#endif
+
 	if (m_config->showStatusBar.get())
 	{
 		RECT statusBarRect;
@@ -358,15 +423,18 @@ void Explorerplusplus::UpdateLayout()
 	int tabBackingLeft;
 	int tabBackingWidth;
 
+	// The tab backing and tab control need to end at the left edge of the recent items pane
+	// (rather than extending underneath it), so that items like the tab scroll buttons aren't
+	// hidden behind the pane.
 	if (m_config->extendTabControl.get())
 	{
 		tabBackingLeft = 0;
-		tabBackingWidth = mainWindowWidth;
+		tabBackingWidth = mainWindowWidth - recentItemsPaneWidth;
 	}
 	else
 	{
 		tabBackingLeft = indentLeft;
-		tabBackingWidth = mainWindowWidth - indentLeft - indentRight;
+		tabBackingWidth = mainWindowWidth - indentLeft - indentRight - recentItemsPaneWidth;
 	}
 
 	UINT showFlags = (m_bShowTabBar ? SWP_SHOWWINDOW : SWP_HIDEWINDOW) | SWP_NOZORDER;
@@ -418,6 +486,19 @@ void Explorerplusplus::UpdateLayout()
 		m_treeViewWidth, foldersPaneHeight,
 		(m_config->showFolders.get() ? SWP_SHOWWINDOW : SWP_HIDEWINDOW) | SWP_NOZORDER);
 
+	/* <---- Recent items pane ----> */
+
+#ifdef _DEBUG
+	if (m_recentItemsPane)
+	{
+		UINT recentItemsPaneShowFlags =
+			(m_config->showRecentItemsPane.get() ? SWP_SHOWWINDOW : SWP_HIDEWINDOW) | SWP_NOZORDER;
+		SetWindowPos(m_view.GetRecentItemsPaneView()->GetHWND(), nullptr,
+			mainWindowWidth - recentItemsPaneWidth, foldersPaneTop, recentItemsPaneWidth,
+			foldersPaneHeight, recentItemsPaneShowFlags);
+	}
+#endif
+
 	/* <---- Display window ----> */
 
 	UINT displayWindowShowFlags =
@@ -425,9 +506,9 @@ void Explorerplusplus::UpdateLayout()
 
 	if (m_config->displayWindowVertical.get())
 	{
-		SetWindowPos(m_displayWindow->GetHWND(), nullptr, mainWindowWidth - indentRight,
-			indentRebar, m_displayWindowWidth, mainWindowHeight - indentRebar - indentBottom,
-			displayWindowShowFlags);
+		SetWindowPos(m_displayWindow->GetHWND(), nullptr,
+			mainWindowWidth - recentItemsPaneWidth - indentRight, indentRebar, m_displayWindowWidth,
+			mainWindowHeight - indentRebar - indentBottom, displayWindowShowFlags);
 	}
 	else
 	{
@@ -446,7 +527,7 @@ void Explorerplusplus::UpdateLayout()
 			showFlags |= SWP_SHOWWINDOW;
 		}
 
-		int width = mainWindowWidth - indentLeft - indentRight;
+		int width = mainWindowWidth - indentLeft - indentRight - recentItemsPaneWidth;
 		int height = mainWindowHeight - indentBottom - indentTop;
 
 		if (m_config->showTabBarAtBottom.get() && m_bShowTabBar)

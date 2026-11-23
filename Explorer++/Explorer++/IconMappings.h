@@ -35,11 +35,14 @@ using IconMapping = std::unordered_map<Icon, std::map<int, UINT>>;
 	{ Icon::Cut, { ICON_SIZE_MAPPINGS(IDB_CUT##SetSuffix) } }, \
 	{ Icon::Delete, { ICON_SIZE_MAPPINGS(IDB_DELETE##SetSuffix) } }, \
 	{ Icon::DeletePermanently, { ICON_SIZE_MAPPINGS(IDB_DELETE_PERMANENTLY##SetSuffix) } }, \
+	{ Icon::File, { ICON_SIZE_MAPPINGS(IDB_FILE##SetSuffix) } }, \
 	{ Icon::Filter, { ICON_SIZE_MAPPINGS(IDB_FILTER##SetSuffix) } }, \
+	{ Icon::Frequent, { ICON_SIZE_MAPPINGS(IDB_FREQUENT##SetSuffix) } }, \
 	{ Icon::Folder, { ICON_SIZE_MAPPINGS(IDB_FOLDER##SetSuffix) } }, \
 	{ Icon::FolderTree, { ICON_SIZE_MAPPINGS(IDB_FOLDER_TREE##SetSuffix) } }, \
 	{ Icon::Forward, { ICON_SIZE_MAPPINGS(IDB_FORWARD##SetSuffix) } }, \
 	{ Icon::Help, { ICON_SIZE_MAPPINGS(IDB_HELP##SetSuffix) } }, \
+	{ Icon::History, { ICON_SIZE_MAPPINGS(IDB_HISTORY##SetSuffix) } }, \
 	{ Icon::Lock, { ICON_SIZE_MAPPINGS(IDB_LOCK##SetSuffix) } }, \
 	{ Icon::MassRename, { ICON_SIZE_MAPPINGS(IDB_MASS_RENAME##SetSuffix) } }, \
 	{ Icon::MergeFiles, { ICON_SIZE_MAPPINGS(IDB_MERGE_FILES##SetSuffix) } }, \
@@ -50,6 +53,7 @@ using IconMapping = std::unordered_map<Icon, std::map<int, UINT>>;
 	{ Icon::Paste, { ICON_SIZE_MAPPINGS(IDB_PASTE##SetSuffix) } }, \
 	{ Icon::PasteShortcut, { ICON_SIZE_MAPPINGS(IDB_PASTE_SHORTCUT##SetSuffix) } }, \
 	{ Icon::Properties, { ICON_SIZE_MAPPINGS(IDB_PROPERTIES##SetSuffix) } }, \
+	{ Icon::Recent, { ICON_SIZE_MAPPINGS(IDB_RECENT##SetSuffix) } }, \
 	{ Icon::Refresh, { ICON_SIZE_MAPPINGS(IDB_REFRESH##SetSuffix) } }, \
 	{ Icon::Rename, { ICON_SIZE_MAPPINGS(IDB_RENAME##SetSuffix) } }, \
 	{ Icon::Search, { ICON_SIZE_MAPPINGS(IDB_SEARCH##SetSuffix) } }, \

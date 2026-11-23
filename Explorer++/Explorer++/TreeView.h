@@ -53,10 +53,18 @@ public:
 	void SetAdapter(TreeViewAdapter *adapter);
 	void SetDelegate(TreeViewDelegate *delegate);
 
+	// Disables the ability to collapse nodes (e.g. via the expander button or the keyboard).
+	// Expanding nodes is still allowed, both by the user and programmatically.
+	void SetNodeCollapsingDisabled(bool disabled);
+
 	void AddExtendedStyles(DWORD styles);
 	void SetImageList(wil::unique_himagelist imageList);
 	TreeViewNode *GetSelectedNode();
 	const TreeViewNode *GetSelectedNode() const;
+
+	// Returns nullptr if no node is selected.
+	TreeViewNode *MaybeGetSelectedNode();
+	const TreeViewNode *MaybeGetSelectedNode() const;
 	void SelectNode(const TreeViewNode *node);
 	void StartRenamingNode(const TreeViewNode *node);
 	void CancelRenaming();
@@ -106,6 +114,10 @@ private:
 	LRESULT ParentWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	void OnShowContextMenu(const POINT &ptScreen);
 	void OnGetDispInfo(NMTVDISPINFO *dispInfo);
+	LRESULT OnCustomDraw(NMTVCUSTOMDRAW *customDraw);
+	void OnGetInfoTip(NMTVGETINFOTIP *infoTip);
+	void DrawItem(HDC hdc, const TreeViewNode *node, HTREEITEM handle, UINT itemState);
+	HFONT GetSecondaryFont(HFONT mainFont);
 	void OnNodeExpanding(const NMTREEVIEW *notifyInfo);
 	LRESULT OnKeyDown(const NMTVKEYDOWN *keyDown);
 	void OnDeletePressed(RemoveMode removeMode);
@@ -126,13 +138,17 @@ private:
 	HTREEITEM GetHandleForNode(const TreeViewNode *node) const;
 	TreeViewNode *GetNodeForHandle(HTREEITEM handle);
 	const TreeViewNode *GetNodeForHandle(HTREEITEM handle) const;
+	const TreeViewNode *MaybeGetNodeForHandle(HTREEITEM handle) const;
 
 	TreeViewAdapter *m_adapter = nullptr;
 	TreeViewDelegate m_noOpDelegate;
 	TreeViewDelegate *m_delegate = &m_noOpDelegate;
 	const KeyboardState *const m_keyboardState;
+	bool m_nodeCollapsingDisabled = false;
 	LabelEditHandlerFactory m_labelEditHandlerFactory;
 	wil::unique_himagelist m_imageList;
+	wil::unique_hfont m_secondaryFont;
+	HFONT m_secondaryFontSource = nullptr;
 	boost::bimap<boost::bimaps::unordered_set_of<HTREEITEM>,
 		boost::bimaps::unordered_set_of<TreeViewNode *, PtrHash, std::equal_to<void>>>
 		m_handleToNodeMap;

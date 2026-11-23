@@ -248,6 +248,10 @@ void BrowserCommandController::ExecuteCommand(int command, OpenFolderDisposition
 		m_config->showFolders = !m_config->showFolders.get();
 		break;
 
+	case IDM_VIEW_RECENT_ITEMS:
+		m_config->showRecentItemsPane = !m_config->showRecentItemsPane.get();
+		break;
+
 	case IDM_VIEW_DISPLAYWINDOW:
 		m_config->showDisplayWindow = !m_config->showDisplayWindow.get();
 		break;

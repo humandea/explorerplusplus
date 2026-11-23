@@ -67,6 +67,11 @@ void XmlAppStorage::LoadFrequentLocations(FrequentLocationsModel *frequentLocati
 	FrequentLocationsXmlStorage::Load(m_rootNode.get(), frequentLocationsModel);
 }
 
+void XmlAppStorage::LoadFileFrequentLocations(FrequentLocationsModel *fileFrequentLocationsModel)
+{
+	FrequentLocationsXmlStorage::LoadFiles(m_rootNode.get(), fileFrequentLocationsModel);
+}
+
 void XmlAppStorage::SaveConfig(const Config &config)
 {
 	ConfigXmlStorage::Save(m_xmlDocument.get(), m_rootNode.get(), config);
@@ -106,6 +111,13 @@ void XmlAppStorage::SaveFrequentLocations(const FrequentLocationsModel *frequent
 {
 	FrequentLocationsXmlStorage::Save(m_xmlDocument.get(), m_rootNode.get(),
 		frequentLocationsModel);
+}
+
+void XmlAppStorage::SaveFileFrequentLocations(
+	const FrequentLocationsModel *fileFrequentLocationsModel)
+{
+	FrequentLocationsXmlStorage::SaveFiles(m_xmlDocument.get(), m_rootNode.get(),
+		fileFrequentLocationsModel);
 }
 
 void XmlAppStorage::Commit()

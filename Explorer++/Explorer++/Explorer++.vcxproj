@@ -433,7 +433,7 @@
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
-      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
+      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\RecentItems\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Asan|Win32'">
@@ -490,7 +490,7 @@
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
-      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
+      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\RecentItems\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Clang|Win32'">
@@ -545,7 +545,7 @@
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
-      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
+      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\RecentItems\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -603,7 +603,7 @@
       </AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
+      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\RecentItems\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Asan|x64'">
@@ -661,7 +661,7 @@
       </AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
+      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\RecentItems\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
@@ -716,7 +716,7 @@
       </AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
+      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\RecentItems\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Asan|ARM64'">
@@ -771,7 +771,7 @@
       </AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
+      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\RecentItems\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Clang|x64'">
@@ -827,7 +827,7 @@
       </AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
+      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\RecentItems\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Clang|ARM64'">
@@ -881,7 +881,7 @@
       <TargetMachine>MachineARM64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
+      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\RecentItems\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -931,7 +931,7 @@
       </AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
+      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\RecentItems\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Clang|Win32'">
@@ -981,7 +981,7 @@
       </AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
+      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\RecentItems\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -1033,7 +1033,7 @@
       </AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
+      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\RecentItems\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Clang|x64'">
@@ -1085,7 +1085,7 @@
       </AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
+      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\RecentItems\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
@@ -1134,7 +1134,7 @@
       </AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
+      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\RecentItems\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Clang|ARM64'">
@@ -1183,7 +1183,7 @@
       </AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
+      <Command>lib /NOLOGO /OUT:"$(TargetPath).lib" "$(ProjectDir)$(Platform)\$(Configuration)\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Bookmarks\UI\Views\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\DisplayWindow\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\CommandApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\Plugins\TabsApi\Events\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\RecentItems\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellBrowser\*.obj" "$(ProjectDir)$(Platform)\$(Configuration)\ShellTreeView\*.obj"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -1328,6 +1328,25 @@
     <ClCompile Include="ModelessDialogList.cpp" />
     <ClCompile Include="ProcessManager.cpp" />
     <ClCompile Include="RebarView.cpp" />
+    <ClCompile Include="RecentItems\CompositeRecentItemsDataSource.cpp" />
+    <ClCompile Include="RecentItems\DebugRecentItemsDataSource.cpp" />
+    <ClCompile Include="RecentItems\FileFrequentLocationsDataSource.cpp" />
+    <ClCompile Include="RecentItems\FileHistoryDataSource.cpp" />
+    <ClCompile Include="RecentItems\FileSystemPathStatusChecker.cpp" />
+    <ClCompile Include="RecentItems\FolderFrequentLocationsDataSource.cpp" />
+    <ClCompile Include="RecentItems\FolderHistoryDataSource.cpp" />
+    <ClCompile Include="RecentItems\RecentItem.cpp" />
+    <ClCompile Include="RecentItems\RecentItemsContextMenu.cpp" />
+    <ClCompile Include="RecentItems\RecentItemsIconManager.cpp" />
+    <ClCompile Include="RecentItems\RecentItemsPane.cpp" />
+    <ClCompile Include="RecentItems\RecentItemsPaneToolbar.cpp" />
+    <ClCompile Include="RecentItems\RecentItemsPaneToolbarView.cpp" />
+    <ClCompile Include="RecentItems\RecentItemsPaneView.cpp" />
+    <ClCompile Include="RecentItems\RecentItemsTreeDelegate.cpp" />
+    <ClCompile Include="RecentItems\RecentTreeViewAdapter.cpp" />
+    <ClCompile Include="RecentItems\RecentTreeViewNode.cpp" />
+    <ClCompile Include="RecentItems\RecentTreeNode.cpp" />
+    <ClCompile Include="RecentItems\RecentTreeBuilder.cpp" />
     <ClCompile Include="RegistryAppStorage.cpp" />
     <ClCompile Include="RegistryAppStorageFactory.cpp" />
     <ClCompile Include="Runtime.cpp" />
@@ -1732,6 +1751,29 @@
     <ClInclude Include="ModelessDialogList.h" />
     <ClInclude Include="ProcessManager.h" />
     <ClInclude Include="RebarView.h" />
+    <ClInclude Include="RecentItems\CompositeRecentItemsDataSource.h" />
+    <ClInclude Include="RecentItems\DebugRecentItemsDataSource.h" />
+    <ClInclude Include="RecentItems\FeatureVersion.h" />
+    <ClInclude Include="RecentItems\FileFrequentLocationsDataSource.h" />
+    <ClInclude Include="RecentItems\FileHistoryDataSource.h" />
+    <ClInclude Include="RecentItems\FileSystemPathStatusChecker.h" />
+    <ClInclude Include="RecentItems\FolderFrequentLocationsDataSource.h" />
+    <ClInclude Include="RecentItems\FolderHistoryDataSource.h" />
+    <ClInclude Include="RecentItems\PathStatusChecker.h" />
+    <ClInclude Include="RecentItems\RecentItem.h" />
+    <ClInclude Include="RecentItems\RecentItemsContextMenu.h" />
+    <ClInclude Include="RecentItems\RecentItemsDataSource.h" />
+    <ClInclude Include="RecentItems\RecentItemsIconManager.h" />
+    <ClInclude Include="RecentItems\RecentItemsPane.h" />
+    <ClInclude Include="RecentItems\RecentItemsPaneMode.h" />
+    <ClInclude Include="RecentItems\RecentItemsPaneToolbar.h" />
+    <ClInclude Include="RecentItems\RecentItemsPaneToolbarView.h" />
+    <ClInclude Include="RecentItems\RecentItemsPaneView.h" />
+    <ClInclude Include="RecentItems\RecentItemsTreeDelegate.h" />
+    <ClInclude Include="RecentItems\RecentTreeNode.h" />
+    <ClInclude Include="RecentItems\RecentTreeBuilder.h" />
+    <ClInclude Include="RecentItems\RecentTreeViewAdapter.h" />
+    <ClInclude Include="RecentItems\RecentTreeViewNode.h" />
     <ClInclude Include="RegistryAppStorage.h" />
     <ClInclude Include="RegistryAppStorageFactory.h" />
     <ClInclude Include="Runtime.h" />
